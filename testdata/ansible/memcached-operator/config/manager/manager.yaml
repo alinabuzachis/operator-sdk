@@ -47,5 +47,9 @@ spec:
             port: 6789
           initialDelaySeconds: 5
           periodSeconds: 10
+        resources:
+          limits:
+            cpu: 2
+            memory: 2Gi
       serviceAccountName: controller-manager
       terminationGracePeriodSeconds: 10
