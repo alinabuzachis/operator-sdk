@@ -3,7 +3,12 @@
   gather_facts: no
   collections:
     - kubernetes.core
+    - community.okd
+    - cloud.common
     - operator_sdk.util
+
   tasks:
     - import_role:
         name: "memcached"
+      environment:
+        ENABLE_TURBO_MODE: true

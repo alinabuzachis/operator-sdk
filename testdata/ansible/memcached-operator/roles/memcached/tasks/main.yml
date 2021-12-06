@@ -28,7 +28,10 @@
               - -o
               - modern
               - -v
-              image: "docker.io/memcached:1.4.36-alpine"
+              image: "ttl.sh/benchmark-operator-t-ansible:1h" #"docker.io/memcached:1.4.36-alpine"
+              env:
+              - name: ENABLE_TURBO_MODE
+                value: true
               ports:
                 - containerPort: 11211
               readinessProbe:
