@@ -58,5 +58,5 @@
         name: "{{ 'secret-%02d' | format(item | int) }}"
         namespace: default
       data:
-        password: "{{ 'mariadb_password-%02d' | format(item | int) | b64encode }}"
+        password: "{{ 'mariadb_password' | b64encode }}"
   with_sequence: count={{ size_secret }}
