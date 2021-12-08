@@ -28,10 +28,7 @@
               - -o
               - modern
               - -v
-              image: "ttl.sh/benchmark-operator-t-ansible:1h" #"docker.io/memcached:1.4.36-alpine"
-              env:
-              - name: ENABLE_TURBO_MODE
-                value: true
+              image: "docker.io/memcached:1.4.36-alpine"
               ports:
                 - containerPort: 11211
               readinessProbe:
@@ -40,3 +37,26 @@
                 initialDelaySeconds: 3
                 periodSeconds: 3
 
+- name: Create {{ size_cfg }} ConfigMaps
+  community.okd.k8s:
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: "{{ 'configmap-%02d' | format(item | int) }}"
+        namespace: default
+      data:
+        number: “{{ item }}”
+  with_sequence: count={{ size_cfg }}
+
+- name: Create {{ size_secret }} Secrets
+  community.okd.k8s:
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ 'secret-%02d' | format(item | int) }}"
+        namespace: default
+      data:
+        password: "{{ 'mariadb_password-%02d' | format(item | int) | b64encode }}"
+  with_sequence: count={{ size_secret }}

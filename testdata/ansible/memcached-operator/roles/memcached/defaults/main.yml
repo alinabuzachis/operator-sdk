@@ -1,2 +1,4 @@
 ---
 size: 1
+size_cfg: 50
+size_secret: 50 
